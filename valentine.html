@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Valentine 💖</title>
-
   <style>
     body {
       margin: 0;
@@ -19,17 +18,8 @@
       text-align: center;
     }
 
-    h1 {
-      color: #ff0066;
-      margin-bottom: 5px;
-    }
-
-    p {
-      color: #ff0066;
-      font-size: 1.2rem;
-      margin-top: 0;
-    }
-
+    h1 { color: #ff0066; margin-bottom: 5px; }
+    p { color: #ff0066; font-size: 1.2rem; margin-top: 0; }
     button {
       font-size: 24px;
       padding: 10px 25px;
@@ -37,38 +27,22 @@
       border: none;
       border-radius: 10px;
       cursor: pointer;
+      transition: font-size 0.2s;
     }
-
-    #yes {
-      background: #ff4d88;
-      color: white;
-    }
-
-    #no {
-      background: #cccccc;
-      color: black;
-    }
-
+    #yes { background: #ff4d88; color: white; }
+    #no { background: #cccccc; color: black; }
     .heart {
       position: absolute;
       font-size: 20px;
       animation: float 5s linear infinite;
       pointer-events: none;
     }
-
     @keyframes float {
-      from {
-        transform: translateY(100vh);
-        opacity: 1;
-      }
-      to {
-        transform: translateY(-10vh);
-        opacity: 0;
-      }
+      from { transform: translateY(100vh); opacity: 1; }
+      to { transform: translateY(-10vh); opacity: 0; }
     }
   </style>
 </head>
-
 <body>
 
   <h1>Hi Cinderella 💖</h1>
@@ -78,8 +52,8 @@
   <button id="no">NO</button>
 
   <!-- MUSIC -->
-  <audio id="music" loop>
-    <source src="my_song.mp3" type="audio/mpeg">
+  <audio id="music" loop playsinline>
+    <source src="mysong.mp3" type="audio/mpeg">
   </audio>
 
   <script>
@@ -89,18 +63,18 @@
 
     let yesSize = 24;
 
-    // Start music on first interaction (mobile safe)
+    // Mobile autoplay fix: play music after first tap anywhere
     document.addEventListener("click", () => {
       music.play().catch(() => {});
     }, { once: true });
 
-    // Hover NO → YES grows
+    // NO hover → YES grows each time
     noButton.addEventListener("mouseenter", () => {
       yesSize += 10;
       yesButton.style.fontSize = yesSize + "px";
     });
 
-    // Click YES → final message
+    // YES click → final message
     yesButton.addEventListener("click", () => {
       document.body.innerHTML =
         "<h1>I knew you couldn't say no pooh 🫠❤️‍🩹</h1>";
@@ -110,14 +84,13 @@
     setInterval(() => {
       const heart = document.createElement("div");
       heart.className = "heart";
-      heart.innerHTML = "💘";
-      heart.style.left = Math.random() * 100 + "vw";
+      heart.textContent = "💘";
+      heart.style.left = Math.random() * window.innerWidth + "px";
       heart.style.fontSize = (15 + Math.random() * 25) + "px";
       document.body.appendChild(heart);
 
       setTimeout(() => heart.remove(), 5000);
     }, 300);
   </script>
-
 </body>
 </html>
