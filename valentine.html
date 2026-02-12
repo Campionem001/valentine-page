@@ -1,96 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Valentine 💖</title>
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      background: #ffe6f0;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      font-family: Arial, sans-serif;
-      text-align: center;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine 💖</title>
 
-    h1 { color: #ff0066; margin-bottom: 5px; }
-    p { color: #ff0066; font-size: 1.2rem; margin-top: 0; }
-    button {
-      font-size: 24px;
-      padding: 10px 25px;
-      margin: 10px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: font-size 0.2s;
-    }
-    #yes { background: #ff4d88; color: white; }
-    #no { background: #cccccc; color: black; }
-    .heart {
-      position: absolute;
-      font-size: 20px;
-      animation: float 5s linear infinite;
-      pointer-events: none;
-    }
-    @keyframes float {
-      from { transform: translateY(100vh); opacity: 1; }
-      to { transform: translateY(-10vh); opacity: 0; }
-    }
-  </style>
+<style>
+body{
+  margin:0;
+  height:100vh;
+  background:#ffe6f0;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  font-family:Arial;
+  text-align:center;
+}
+
+h1{color:#ff0066;}
+p{color:#ff0066;font-size:1.2rem;}
+
+button{
+  font-size:24px;
+  padding:12px 28px;
+  margin:10px;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+  transition:font-size 0.2s;
+}
+
+#yes{background:#ff4d88;color:white;}
+#no{background:#ccc;color:black;}
+
+.heart{
+  position:absolute;
+  animation:float 5s linear infinite;
+  pointer-events:none;
+}
+
+@keyframes float{
+  from{transform:translateY(100vh);opacity:1;}
+  to{transform:translateY(-10vh);opacity:0;}
+}
+
+#overlay{
+  position:fixed;
+  inset:0;
+  z-index:10;
+}
+
+#tapText{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  color:#ff0066;
+  font-size:22px;
+  z-index:11;
+}
+</style>
 </head>
+
 <body>
 
-  <h1>Hi Cinderella 💖</h1>
-  <p>Will you be my Valentine?</p>
+<h1>Hi Cinderella 💖</h1>
+<p>Will you be my Valentine?</p>
 
-  <button id="yes">YES</button>
-  <button id="no">NO</button>
+<button id="yes">YES</button>
+<button id="no">NO</button>
 
-  <!-- MUSIC -->
-  <audio id="music" loop playsinline>
-    <source src="mysong.mp3" type="audio/mpeg">
-  </audio>
+<div id="overlay"></div>
+<div id="tapText">Tap anywhere to start the music 🎵</div>
 
-  <script>
-    const yesButton = document.getElementById("yes");
-    const noButton = document.getElementById("no");
-    const music = document.getElementById("music");
+<audio id="music" loop playsinline>
+  <source src="my_song.mp3" type="audio/mpeg">
+</audio>
 
-    let yesSize = 24;
+<script>
+const yes=document.getElementById("yes");
+const no=document.getElementById("no");
+const music=document.getElementById("music");
+const overlay=document.getElementById("overlay");
+const tapText=document.getElementById("tapText");
 
-    // Mobile autoplay fix: play music after first tap anywhere
-    document.addEventListener("click", () => {
-      music.play().catch(() => {});
-    }, { once: true });
+let size=24;
 
-    // NO hover → YES grows each time
-    noButton.addEventListener("mouseenter", () => {
-      yesSize += 10;
-      yesButton.style.fontSize = yesSize + "px";
-    });
+// start music on first tap (mobile safe)
+overlay.addEventListener("click",()=>{
+  music.play().catch(()=>{});
+  overlay.style.display="none";
+  tapText.style.display="none";
+},{once:true});
 
-    // YES click → final message
-    yesButton.addEventListener("click", () => {
-      document.body.innerHTML =
-        "<h1>I knew you couldn't say no pooh 🫠❤️‍🩹</h1>";
-    });
+// YES grows every NO tap
+function grow(){
+  size+=12;
+  yes.style.fontSize=size+"px";
+}
+no.addEventListener("mouseenter",grow);
+no.addEventListener("touchstart",grow);
 
-    // Floating hearts
-    setInterval(() => {
-      const heart = document.createElement("div");
-      heart.className = "heart";
-      heart.textContent = "💘";
-      heart.style.left = Math.random() * window.innerWidth + "px";
-      heart.style.fontSize = (15 + Math.random() * 25) + "px";
-      document.body.appendChild(heart);
+// YES clicked
+yes.addEventListener("click",()=>{
+  document.body.innerHTML="<h1>I knew you couldn’t say no pooh 🫠❤️‍🩹</h1>";
+});
 
-      setTimeout(() => heart.remove(), 5000);
-    }, 300);
-  </script>
+// hearts
+setInterval(()=>{
+  const h=document.createElement("div");
+  h.className="heart";
+  h.textContent="💘";
+  h.style.left=Math.random()*window.innerWidth+"px";
+  h.style.fontSize=(15+Math.random()*25)+"px";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),5000);
+},300);
+</script>
+
 </body>
 </html>

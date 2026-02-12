@@ -5,43 +5,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Click Me 💞</title>
   <style>
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      background: #ffe6f0;
-      font-family: Arial, sans-serif;
+    body{
+      margin:0;
+      height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      background:#ffe6f0;
+      font-family:Arial;
     }
-    a {
-      font-size: 50px;
-      color: #ff0066;
-      text-decoration: none;
-      padding: 20px 40px;
-      border: 3px solid #ff6699;
-      border-radius: 20px;
-      transition: transform 0.3s, background 0.3s;
+    .click{
+      font-size:40px;
+      color:#ff0066;
+      text-decoration:none;
+      border:3px solid #ff4d88;
+      padding:20px 40px;
+      border-radius:20px;
+      animation:pulse 1.2s infinite;
     }
-    a:hover {
-      transform: scale(1.2);
-      background: #ffccd9;
+    @keyframes pulse{
+      0%{transform:scale(1);}
+      50%{transform:scale(1.1);}
+      100%{transform:scale(1);}
     }
   </style>
 </head>
 <body>
-  <a href="valentine.html" id="clickMe">Click Me 💞</a>
+
+  <a class="click" href="valentine.html">Click Me 💞</a>
 
   <script>
-    // Auto redirect after 1.5 seconds
-    setTimeout(() => {
-      window.location.href = "valentine.html";
-    }, 1500);
-
-    // Allow manual click immediately
-    document.getElementById("clickMe").addEventListener("click", () => {
-      window.location.href = "valentine.html";
-    });
+    setTimeout(()=>{
+      window.location.href="valentine.html";
+    },1500);
   </script>
+
 </body>
 </html>
