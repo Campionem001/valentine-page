@@ -2,123 +2,128 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Valentine 💘</title>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Valentine Page</title>
   <style>
     body {
       margin: 0;
       height: 100vh;
-      background: pink;
+      overflow: hidden;
+      background: #ffe6f0;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       font-family: Arial, sans-serif;
-      overflow: hidden;
       text-align: center;
     }
 
     h1 {
-      padding: 10px;
+      color: #ff0066;
+      margin-bottom: 5px;
+    }
+
+    p {
+      margin-top: 0;
+      margin-bottom: 20px;
+      font-size: 1.2rem;
+      color: #ff0066;
     }
 
     button {
-      font-size: 18px;
-      padding: 12px 22px;
+      font-size: 1.5rem;
+      padding: 10px 20px;
       margin: 10px;
-      border: none;
-      border-radius: 12px;
       cursor: pointer;
-      transition: all 0.3s ease;
+      border: none;
+      border-radius: 10px;
+      transition: transform 0.2s;
     }
 
     #yes {
-      background: red;
+      background-color: #ff6699;
       color: white;
     }
 
     #no {
-      background: white;
-      position: absolute;
+      background-color: #cccccc;
+      color: black;
     }
 
     .heart {
       position: absolute;
-      bottom: -20px;
-      font-size: 20px;
-      animation: floatUp 5s linear infinite;
+      font-size: 24px;
+      animation: float 5s linear infinite;
+      pointer-events: none;
     }
 
-    @keyframes floatUp {
-      from {
-        transform: translateY(0);
-        opacity: 1;
-      }
-      to {
-        transform: translateY(-100vh);
-        opacity: 0;
-      }
+    @keyframes float {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* Style for the clickable link */
+    .click-link {
+      font-size: 1.5rem;
+      color: #ff3399;
+      text-decoration: none;
+      margin-bottom: 20px;
+      display: inline-block;
+    }
+    .click-link:hover {
+      transform: scale(1.2);
+      transition: 0.3s;
     }
   </style>
 </head>
-
 <body>
+  <h1>Hi Cinderella 💖</h1>
+  <p>Will you be my Valentine?</p>
 
-  <h1 id="message">Will you be my Valentine? 💕</h1>
+  <!-- Clickable link appears as "Please click me 💞" -->
+  <a href="https://YOURUSERNAME.github.io/REPOSITORY-NAME/valentine.html" target="_blank" class="click-link">
+    Please click me 💞
+  </a>
 
-  <button id="yes">Yes 💖</button>
-  <button id="no">No 💔</button>
+  <button id="yes">YES</button>
+  <button id="no">NO</button>
 
-  <!-- LOCAL MUSIC -->
-  <audio id="music" loop>
-    <source src="mysong.mp3" type="audio/mpeg">
+  <audio id="music" loop autoplay>
+    <source src="my_song.mp3" type="audio/mpeg">
+    Your browser does not support audio.
   </audio>
 
   <script>
-    const yesBtn = document.getElementById("yes");
-    const noBtn = document.getElementById("no");
-    const message = document.getElementById("message");
-    const music = document.getElementById("music");
-
-    let yesSize = 18;
-
-    // Start music after first click
-    document.body.addEventListener("click", () => {
-      music.play();
-    }, { once: true });
-
-    // YES button action
-    yesBtn.onclick = () => {
-      message.innerHTML = "I Knew u couldn't say no, Pooh 🫦❤️‍🩹";
-      yesBtn.style.display = "none";
-      noBtn.style.display = "none";
-    };
-
-    // NO button runs away + YES grows
-    noBtn.onmouseover = () => {
-      const x = Math.random() * (window.innerWidth - 100);
-      const y = Math.random() * (window.innerHeight - 100);
-
-      noBtn.style.left = x + "px";
-      noBtn.style.top = y + "px";
-
-      yesSize += 4;
-      yesBtn.style.fontSize = yesSize + "px";
-    };
+    const yesButton = document.getElementById('yes');
+    const noButton = document.getElementById('no');
+    const body = document.body;
 
     // Floating hearts
-    setInterval(() => {
-      const heart = document.createElement("div");
-      heart.className = "heart";
-      heart.innerHTML = "💘";
-      heart.style.left = Math.random() * window.innerWidth + "px";
-      document.body.appendChild(heart);
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.textContent = '💘';
+      heart.style.left = Math.random() * window.innerWidth + 'px';
+      heart.style.fontSize = (10 + Math.random() * 30) + 'px';
+      body.appendChild(heart);
 
       setTimeout(() => {
         heart.remove();
       }, 5000);
-    }, 500);
-  </script>
+    }
 
+    setInterval(createHeart, 300);
+
+    // NO button grows on hover
+    noButton.addEventListener('mouseenter', () => {
+      let currentSize = parseFloat(window.getComputedStyle(noButton).fontSize);
+      noButton.style.fontSize = (currentSize + 5) + 'px';
+    });
+
+    // YES button click
+    yesButton.addEventListener('click', () => {
+      body.innerHTML = '<h1>I knew you couldn\'t say no pooh 🫠❤️‍🩹</h1>';
+    });
+  </script>
 </body>
 </html>
