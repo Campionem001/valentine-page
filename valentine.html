@@ -3,13 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Valentine Page</title>
+  <title>Valentine 💖</title>
+
   <style>
     body {
       margin: 0;
       height: 100vh;
-      overflow: hidden;
       background: #ffe6f0;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -24,106 +25,99 @@
     }
 
     p {
-      margin-top: 0;
-      margin-bottom: 20px;
-      font-size: 1.2rem;
       color: #ff0066;
+      font-size: 1.2rem;
+      margin-top: 0;
     }
 
     button {
-      font-size: 1.5rem;
-      padding: 10px 20px;
+      font-size: 24px;
+      padding: 10px 25px;
       margin: 10px;
-      cursor: pointer;
       border: none;
       border-radius: 10px;
-      transition: transform 0.2s;
+      cursor: pointer;
     }
 
     #yes {
-      background-color: #ff6699;
+      background: #ff4d88;
       color: white;
     }
 
     #no {
-      background-color: #cccccc;
+      background: #cccccc;
       color: black;
     }
 
     .heart {
       position: absolute;
-      font-size: 24px;
+      font-size: 20px;
       animation: float 5s linear infinite;
       pointer-events: none;
     }
 
     @keyframes float {
-      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-      100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
-    }
-
-    /* Style for the clickable link */
-    .click-link {
-      font-size: 1.5rem;
-      color: #ff3399;
-      text-decoration: none;
-      margin-bottom: 20px;
-      display: inline-block;
-    }
-    .click-link:hover {
-      transform: scale(1.2);
-      transition: 0.3s;
+      from {
+        transform: translateY(100vh);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-10vh);
+        opacity: 0;
+      }
     }
   </style>
 </head>
+
 <body>
+
   <h1>Hi Cinderella 💖</h1>
   <p>Will you be my Valentine?</p>
-
-  <!-- Clickable link appears as "Please click me 💞" -->
-  <a href="https://YOURUSERNAME.github.io/REPOSITORY-NAME/valentine.html" target="_blank" class="click-link">
-    Please click me 💞
-  </a>
 
   <button id="yes">YES</button>
   <button id="no">NO</button>
 
-  <audio id="music" loop autoplay>
+  <!-- MUSIC -->
+  <audio id="music" loop>
     <source src="my_song.mp3" type="audio/mpeg">
-    Your browser does not support audio.
   </audio>
 
   <script>
-    const yesButton = document.getElementById('yes');
-    const noButton = document.getElementById('no');
-    const body = document.body;
+    const yesButton = document.getElementById("yes");
+    const noButton = document.getElementById("no");
+    const music = document.getElementById("music");
+
+    let yesSize = 24;
+
+    // Start music on first interaction (mobile safe)
+    document.addEventListener("click", () => {
+      music.play().catch(() => {});
+    }, { once: true });
+
+    // Hover NO → YES grows
+    noButton.addEventListener("mouseenter", () => {
+      yesSize += 10;
+      yesButton.style.fontSize = yesSize + "px";
+    });
+
+    // Click YES → final message
+    yesButton.addEventListener("click", () => {
+      document.body.innerHTML =
+        "<h1>I knew you couldn't say no pooh 🫠❤️‍🩹</h1>";
+    });
 
     // Floating hearts
-    function createHeart() {
-      const heart = document.createElement('div');
-      heart.className = 'heart';
-      heart.textContent = '💘';
-      heart.style.left = Math.random() * window.innerWidth + 'px';
-      heart.style.fontSize = (10 + Math.random() * 30) + 'px';
-      body.appendChild(heart);
+    setInterval(() => {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerHTML = "💘";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = (15 + Math.random() * 25) + "px";
+      document.body.appendChild(heart);
 
-      setTimeout(() => {
-        heart.remove();
-      }, 5000);
-    }
-
-    setInterval(createHeart, 300);
-
-    // NO button grows on hover
-    noButton.addEventListener('mouseenter', () => {
-      let currentSize = parseFloat(window.getComputedStyle(noButton).fontSize);
-      noButton.style.fontSize = (currentSize + 5) + 'px';
-    });
-
-    // YES button click
-    yesButton.addEventListener('click', () => {
-      body.innerHTML = '<h1>I knew you couldn\'t say no pooh 🫠❤️‍🩹</h1>';
-    });
+      setTimeout(() => heart.remove(), 5000);
+    }, 300);
   </script>
+
 </body>
 </html>
